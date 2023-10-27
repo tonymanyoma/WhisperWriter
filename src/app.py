@@ -1,15 +1,23 @@
-import whisper
+from flask import Flask
+from flask_cors import CORS
+from config import config
 
-model = whisper.load_model("medium")
-result = model.transcribe("src/audio.mp3")
-print(result["text"])
+# Routes
+from routes import WhisperRoutes
 
-audio = whisper.load_audio("src/audio.mp3")
-audio = whisper.pad_or_trim(audio)
+app = Flask(__name__)
 
-# make log-Mel spectrogram and move to the same device as the model
-mel = whisper.log_mel_spectrogram(audio).to(model.device)
+CORS(app, resources={"*":{"origins":"http://localhost:8080"}})
 
-# detect the spoken language
-_, probs = model.detect_language(mel)
-print(f"Detected language: {max(probs, key=probs.get)}")
+def page_not_found(error):
+    return "<h1>Not Found page</h1>", 404
+
+if __name__ == '__main__':
+    app.config.from_object(config['development'])
+    
+    # Blueprints
+    app.register_blueprint(WhisperRoutes.main, url_prefix='/api/whisper')
+    
+    # Error handler
+    app.register_error_handler(404, page_not_found)
+    app.run()

@@ -1,2 +1,7 @@
 /venv
+.env
 /__pycache__/
+/src/uploads
+/src/__pycache__
+/src/utils/__pycache__
+/src/routes/__pycache__
