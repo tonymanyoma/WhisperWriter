@@ -10,7 +10,7 @@
 
   - Python 3.11.5
 
-  ## ffmpeg
+  ## Install ffmpeg
     ```
     on Ubuntu or Debian
     sudo apt update && sudo apt install ffmpeg
@@ -34,6 +34,8 @@
   - Create virtual environment: python -m venv venv
   - Activate enviroment: venv\Scripts\activate
   - Install the required packages: pip install -r requirements.txt
+  - Create .env file based to .env.example 
+
 
  ## Run project
  - python .\src\app.py
